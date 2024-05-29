@@ -1,0 +1,215 @@
+<!-- ======= Masthead Section ======= -->
+
+<div *ngIf="isLoading && !eventConfigurations" id="loading">
+    <img id="loading-image" width="40px" src="assets/loading.gif" alt="Loading..." />
+</div>
+
+<section id="Masthead">
+    <div class="container pt-3">
+        <div class="hero-container position-relative">
+            <div class="img-sec">
+                @if(eventConfigurations){
+                <img [src]="IMG_BLOB_URL + eventConfigurations.masthead_image" class="img-fluid" alt="img" />
+                }
+            </div>
+            <div class="masthead-text-box header-container">
+                <!-- <div class="d-flex align-items-center">
+                    <span class="material-symbols-outlined date-time-icon">
+                        calendar_month
+                    </span>
+                    @if(eventConfigurations){
+                    <span class="ms-lg-2 ms-1 date-time-text">
+                        {{eventConfigurations.event_Start_Date | date: 'dd MMM yyyy hh:mm a':"+0000"}}
+                    </span>
+                    }
+                </div> -->
+                <div class="d-flex align-items-center">
+                    <span class="material-symbols-outlined date-time-icon">
+                        schedule
+                    </span>
+                    @if(eventConfigurations){
+                    <span class="ms-lg-2 ms-1 date-time-text">
+                        {{eventConfigurations.event_Start_Date | date: 'hh:mm a':'+0000'}} -
+                        {{eventConfigurations.event_End_Date | date: 'hh:mm a':'+0000'}}</span>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    <img class="dots-left explore-d-none" src="assets/home-page-dots.png" alt="">
+    <img class="dots-right explore-d-none" src="assets/home-page-dots.png" alt="">
+
+</section><!-- #Masthead -->
+
+
+<!-- ======= Intro Section ======= -->
+
+<section id="Intro">
+    <div class="container">
+        <div class="hero-container">
+            <div class="garayout-content">
+                @if (eventConfigurations) {
+                <p class="section-title text_color1 fw-700 mt-2">{{eventConfigurations.eventTitle}}</p>
+                }
+                <p class="intro fw-300">Buckle up for a day of fun under the sun with a 3KM fun run!
+                    Ready to embark on a journey that transcends boundaries.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section>
+    <div class="container">
+        <div class="hero-container">
+            <div class="img-sec">
+                @if(eventConfigurations){
+                <div [innerHTML]="eventConfigurations.event_homescreen_design"></div>
+                }
+            </div>
+        </div>
+        <div class="button-attached">
+            <a (click)="openRegistrationPage()" target="_self" class="btn-style-1 btn register-btn">Register</a>
+        </div>
+    </div>
+</section>
+
+<section class="pt-3">
+    <div class="row g-0">
+        <p class="section-title text_color1 text-end fw-700">explore</p>
+    </div>
+    <div class="row g-0">
+        @for(item of explore.leftSide; track item; let i = $index){
+        <div class="pointer explore-tab" [ngClass]="[i === 0 ? 'explore-tab-left':'', !item.name ? 'explore-d-none':'']"
+            (click)="scrollToView(item.id)">
+            <img *ngIf="item.imgPath" width="100px" height="100px"
+                class="text-center explore-images justify-content-center" [src]="'assets/'+ item.imgPath" alt="">
+            <label class="explore-label text_color1 mt-1">{{item.name}}</label>
+        </div>
+        }
+    </div>
+
+    <div class="row g-0" style="justify-content: flex-end;">
+        <div *ngFor="let item of explore.rightSide; let i=index" (click)="scrollToView(item.id)"
+            [ngClass]="[i === 3 ? 'explore-tab-right':'', !item.name ? 'explore-d-none':'']"
+            class="explore-tab pointer">
+            <img *ngIf="item.imgPath" class="text-center explore-images justify-content-center"
+                [src]="'assets/'+ item.imgPath" alt="">
+            <label class="explore-label text_color1 mt-1">{{item.name}}</label>
+        </div>
+    </div>
+</section>
+
+
+<section id="sponsors" class="pt-lg-5 pt-3">
+    @if(eventConfigurations && eventConfigurations.eventSponsers){
+    <div class="row g-0">
+        <p class="section-title text_color1 text-start fw-700">sponsors</p>
+    </div>
+    <div class="container">
+        <div class="row justify-content-center mx-5">
+            @for(sponsor of eventConfigurations.eventSponsers; track sponsor; let i = $index){
+            <div class="col-md-3 pointer" (click)="openSponsorsPage(sponsor.pk_sponsor_participation_id)">
+                <div class="card mb-4 box-shadow border-0" height="300px">
+                    <img class="card-img-top custom-card-img" height="220px"
+                        [src]="OLD_IMG_BLOB_URL + sponsor?.sponsor_participation_logo" alt="Card image cap">
+                    <div class="card-body card_background_color card-heading-text-color custom-card-body"
+                        style="height: 80px;">
+                        <p class="card-text fw-600 mb-0">{{sponsor?.sponsor_participation_title}}</p>
+                        <p class="card-text text-truncate card-description">{{sponsor.sponser_category}} Sponsor</p>
+                    </div>
+                </div>
+            </div>
+            }
+        </div>
+    </div>
+    }
+</section>
+
+
+<section id="activities" class="pt-lg-5 pt-3">
+    @if(eventConfigurations && eventConfigurations.eventActivity){
+    <div class="row g-0">
+        <p class="section-title text_color1 text-end fw-700">activities</p>
+    </div>
+    <div style="flex-wrap: wrap;justify-content: flex-end;" class="d-lg-flex d-block">
+        <div class="row g-0">
+            <div class="col-md-2"></div>
+            <div class="col-md-10">
+                <div class="row g-0">
+                    @for(activity of eventConfigurations.eventActivity.slice(0,3); track activity; let i = $index){
+                    <div class="col-md-4 p-3 px-2 pointer" height="300px" 
+                    (click)="openActivityPage(activity.pk_event_activity_id)" >
+                        <div class="card mb-4 box-shadow border-0">
+                            <img class="card-img-top custom-card-img" height="200px"
+                                [src]="OLD_IMG_BLOB_URL + activity?.icon" alt="Card image cap">
+                            <div class="card-body card_background_color card-heading-text-color custom-card-body"
+                                style="height: 100px;">
+                                <p class="card-text custom-card-title mb-1">{{activity?.event_activity_title}}</p>
+                                <p class="card-text text-truncate card-description"
+                                    [innerHTML]="activity?.event_activity_description">
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div style="flex-wrap: wrap;justify-content: flex-start;" class="d-lg-flex d-block">
+        <div class="row g-0">
+            <div class="col-md-10">
+                <div class="row g-0">
+                    @for(activity of eventConfigurations.eventActivity.slice(3); track activity; let i = $index){
+                    <div class="col-md-4 p-3 px-2 pointer" height="300px" 
+                       (click)="openActivityPage(activity.pk_event_activity_id)">
+                        <div class="card mb-4 box-shadow border-0">
+                            <img class="card-img-top custom-card-img" height="200px"
+                                [src]="OLD_IMG_BLOB_URL + activity?.icon" alt="Card image cap">
+                            <div class="card-body card_background_color card-heading-text-color custom-card-body"
+                                style="height: 100px;">
+                                <p class="card-text custom-card-title mb-1">{{activity?.event_activity_title}}</p>
+                                <p class="card-text text-truncate card-description"
+                                    [innerHTML]="activity?.event_activity_description">
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    }
+                </div>
+            </div>
+            <div class="col-md-2"></div>
+        </div>
+    </div>
+    }
+</section>
+
+<section id="organisers" class="pt-lg-5 pt-3">
+    @if(eventConfigurations && eventConfigurations.eventOrganisers){
+    <div class="row g-0">
+        <p class="section-title text_color1 text-start fw-700">organisers</p>
+    </div>
+    <div class="container">
+        <div class="row g-0 organization-container p-lg-4 p-3 ps-4 ps-lg-5 mb-lg-5 mb-2">
+            @for(organizer of getOrganiserList(); track organizer; let i = $index){
+            <div class="col-md-4 mb-5">
+                <div class="row">
+                    <img [src]="OLD_IMG_BLOB_URL + organizer.organiser_logos"
+                        onerror="this.src='assets/default-organiser.png';" class="list-image-icon" style="padding:1px"
+                        alt="...">
+                    <div class="col-lg-9 col-10 px-s">
+                        <div class="main-list-border-color col-12">
+                            <p class="title-font m-0 list-title-color">
+                                {{organizer.organiser_name}}</p>
+                            <p class="placeholde-1 mt-1 text-truncate m-0 list-sub-title-color col-md-10"
+                                [innerHTML]="organizer.organiser_descriptions"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            }
+        </div>
+    </div>
+    }
+</section>

@@ -1,0 +1,107 @@
+<!-- ======= Hero Section ======= -->
+<section id="hero">
+    <div class="row g-0">
+        <div class="hero-container position-relative">
+            <div class="img-sec">
+                @if(eventConfigDetails){
+                <p [innerHtml]="eventConfigDetails.registration_header_text"></p>
+                }
+            </div>
+        </div>
+    </div>
+</section><!-- #Hero -->
+
+<div class="desktop-only">
+    <img class="network-icon-right network-image-rotate" src="assets/network-icon.png" alt="">
+</div>
+<!-- ======= Intro Section ======= -->
+
+<section id="Intro">
+    <div class="container mb-2 mt-3">
+        <div class="row g-0">
+            <div class="Intro-container col-4 col-lg-3">
+                <img src="assets/company-logo.png" class="company-logo" alt="img" />
+
+                <div class="align-items-center mobile-only mt-3">
+                    <div class="d-flex w-100 align-items-center">
+                        <span class="material-symbols-outlined text_color1">
+                            calendar_month
+                        </span>
+                        <span class="ms-1 text_color1 fw-500">
+                            @if(eventConfigDetails){
+                                {{eventConfigDetails.event_Start_Date | date: 'dd MMM yyyy'}}
+                            }
+                        </span>
+                    </div>
+
+                    <div class="d-flex w-100 mt-2 align-items-center">
+                        <span class="material-symbols-outlined text_color1">
+                            schedule
+                            </span>
+                        <span class="ms-1 text_color1 fw-500 ">
+                            @if(eventConfigDetails){
+                                {{eventConfigDetails.event_Start_Date | date: 'hh:mm a':"+0000"}}
+                            }
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-8 col-lg-9 ps-lg-4 ps-2">
+                <p class="text_color1 section-title fw-700">3KM FUN RUN Registration form</p>
+                <p class="text_color1 fw-100 registartion-description">"🏃‍♂️ Lace up for a thrilling 3km fun run! Whether you're a sprinter or a casual jogger, join the
+                    excitement! Remember to fill out your info for smooth check-in.
+                    Let's make memories, push limits, and have a blast together! See you at the starting line! 🎉👟
+                    #FunRun
+                    #CommunityFitness"</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+<!-- ======= Tab Section ======= -->
+<section id="Tab">
+    <div class="container my-2">
+        <div class="row g-0">
+            <div class="tab-container col-md-3">
+                <div class="align-items-center desktop-only align-items-center">
+                    <span class="material-symbols-outlined text_color1">
+                        calendar_month
+                    </span>
+                    <span class="ms-1 text_color1 fw-500">
+                        @if(eventConfigDetails){
+                            {{eventConfigDetails.event_Start_Date | date: 'dd MMM yyyy hh:mm a':"+0000"}}
+                        }
+                    </span>
+                </div>
+            </div>
+            <div class="col-md-9 ps-4">
+                <div class="col-12 text-start">
+                    <div class="stepper-wrapper stepper-container">
+                        <div class="stepper-item completed">
+                            <div class="step-counter">1</div>
+                            <div class="step-name">Personal</div>
+                        </div>
+                        <div class="stepper-item" [ngClass]=" 2 == checkCurrentActivatedTab() || 3 == checkCurrentActivatedTab() ? 'completed':'active'">
+                            <div class="step-counter">2</div>
+                            <div class="step-name">Payment</div>
+                        </div>
+                        <div class="stepper-item active"
+                            [ngClass]="3 == checkCurrentActivatedTab() ? 'completed':'active'">
+                            <div class="step-counter">3</div>
+                            <div class="step-name">Confirmation </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<router-outlet></router-outlet>
+
+
+<div class="desktop-only">
+    <img class="network-icon" src="assets/network-icon.png" alt="">
+</div>

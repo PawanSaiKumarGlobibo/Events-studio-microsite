@@ -1,0 +1,25 @@
+<section>
+    <div class="container d-flex align-items-center" style="justify-content: center;">
+        <div *ngIf="paypalFormDetails" class="row g-0">
+            <form [action]="paypalFormDetails.paypalUrl" method="post" target="_blank">
+                <input name="cmd" type="hidden" value="_xclick" />
+                <input name="business" type="hidden" [value]="paypalFormDetails.businessId" />
+                <input name="button_subtype" type="hidden" value="services" />
+                <input name="no_note" type="hidden" value="0" />
+                <input name="item_name" type="hidden" [value]="paypalFormDetails.itemName" />
+                <input name="item_number" type="hidden" [value]="participantDetails.ticketId" />
+                <input name="amount" type="hidden" [value]="paypalFormDetails.ticketAmount" />
+                <input name="currency_code" type="hidden" [value]="paypalFormDetails.country_code" />
+                <input name="bn" type="hidden" value="PP-BuyNowBF:btn_buynowCC_LG.gif:NonHostedGuest" />
+                <input alt="PayPal – The safer, easier way to pay online!" name="submit"
+                    src="https://www.paypalobjects.com/webstatic/mktg/Logo/AM_SbyPP_mc_vs_ms_ae_UK.png"
+                    type="image" />
+                <img decoding="async" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" alt="" width="1"
+                    height="1" border="0" />
+                <input type="hidden" name="notify_url" value="https://ebsn-staging.azurewebsites.net/Payment/PaypalIPN">
+                <input type="hidden" name="custom" [value]="paypalFormDetails.participantId+'_Login'">
+                <input type="hidden" name="return" [value]="paypalFormDetails.confirmationPageURL">
+            </form>
+        </div>
+    </div>
+</section>

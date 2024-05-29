@@ -1,0 +1,6 @@
+<ng-container *ngIf="showHeaderFooter">
+    <app-header></app-header>
+</ng-container>
+<router-outlet></router-outlet>
+<app-footer *ngIf="showHeaderFooter"></app-footer>
+<div id="snackbar"></div>
